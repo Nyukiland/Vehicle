@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 public class CameraGestion : MonoBehaviour
 {
     [SerializeField] AllVariable manager;
+    [SerializeField] GameObject moto;
+    [SerializeField] GameObject motoPivot;
 
     int camState = 0;
     bool lookBehind;
@@ -26,6 +28,8 @@ public class CameraGestion : MonoBehaviour
     void Update()
     {
         CamPosition();
+        motoPivot.transform.rotation = Quaternion.Lerp(motoPivot.transform.rotation, moto.transform.rotation, manager.lerpSpeedCam);
+        motoPivot.transform.position = Vector3.Lerp(motoPivot.transform.position, moto.transform.position, manager.lerpSpeedCam);
     }
 
     void ChangeCam()
@@ -37,9 +41,10 @@ public class CameraGestion : MonoBehaviour
     void CamPosition()
     {
         Vector2 camStatePos = Vector2.zero;
-        if (camState == 0) camStatePos = manager.distFromPlayer1;
-        else if (camState == 1) camStatePos = manager.distFromPlayer2;
+        if (camState == 0) camStatePos = manager.camDistFromPlayer1;
+        else if (camState == 1) camStatePos = manager.camDistFromPlayer2;
 
+        Debug.Log(cameraRot);
 
         if (camState == 2)
         {
@@ -64,7 +69,7 @@ public class CameraGestion : MonoBehaviour
                 Camera.main.transform.localPosition = new Vector3(0, camStatePos.y, camStatePos.x);
                 Camera.main.transform.localRotation = new Quaternion(0, 0, 0, 0);
             }
-            transform.localRotation = new Quaternion(Mathf.Abs(cameraRot.y) * 90, cameraRot.x * 90, 0, 0);
+            transform.localEulerAngles = new Vector3(cameraRot.y * 90, -cameraRot.x * 90, 0);
         }
     }
 }

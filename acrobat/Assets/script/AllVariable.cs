@@ -12,9 +12,10 @@ public class AllVariable : MonoBehaviour
     [Space (10)]
     [Header ("Camera Variable")]
 
-    public Vector2 distFromPlayer1;
-    public Vector2 distFromPlayer2;
+    public Vector2 camDistFromPlayer1;
+    public Vector2 camDistFromPlayer2;
     public Vector3 positionCamAvant;
+    public float lerpSpeedCam;
 
     private void Awake()
     {
