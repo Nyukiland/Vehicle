@@ -3591,7 +3591,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh28646
+  m_Name: pb_Mesh29446
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10859,9 +10859,10 @@ MonoBehaviour:
   camDistFromPlayer2: {x: -15, y: 2.5}
   positionCamAvant: {x: 0, y: 0, z: 1}
   lerpSpeedCam: 0.8
-  speedMax: 0
-  speedAcceleration: 0
-  speedDeceleration: 0
+  speedMax: 1
+  speedAcceleration: 0.5
+  speedDeceleration: 3
+  joystickImpactOnSpeed: 0
 --- !u!43 &1462224685
 Mesh:
   m_ObjectHideFlags: 0
@@ -19286,7 +19287,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!64 &1726760609
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -19363,7 +19364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a06bbf9217b21643a24f45e74c72791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 0}
+  manager: {fileID: 1444627165}
 --- !u!1 &1736404536
 GameObject:
   m_ObjectHideFlags: 0

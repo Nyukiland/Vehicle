@@ -8,6 +8,7 @@ public class Deplacement : MonoBehaviour
 
     float accelerationInputValue;
     float decelerationInputValue;
+    bool immediateBrake;
     float speedToGo;
     Vector2 direction;
     Vector3 velocity;
@@ -19,6 +20,14 @@ public class Deplacement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         manager.controls.Movement.Accelerate.performed += V => accelerationInputValue = V.ReadValue <float>();
+
+        manager.controls.Movement.Brake.performed += V => decelerationInputValue = V.ReadValue <float>();
+
+        manager.controls.Movement.CompleteBrake.performed += V => immediateBrake = true;
+        manager.controls.Movement.CompleteBrake.canceled += V => immediateBrake = false;
+
+        manager.controls.Movement.Move.performed += V => direction = V.ReadValue<Vector2>();
+        manager.controls.Movement.Move.canceled += V => direction = Vector2.zero;
     }
 
     // Update is called once per frame
@@ -27,13 +36,27 @@ public class Deplacement : MonoBehaviour
         velocity = rb.velocity;
 
         speedGestion();
+        TurnVehicle();
 
         rb.velocity = velocity;
     }
 
     void speedGestion()
     {
-        speedToGo += (accelerationInputValue * manager.speedMax) - (decelerationInputValue * manager.speedMax);
+        speedToGo += (accelerationInputValue * manager.speedMax);
+
+        if (speedToGo <= 0) speedToGo -= decelerationInputValue * (manager.speedMax / manager.speedDeceleration);
+        else speedToGo -= decelerationInputValue * velocity.magnitude;
+
+        if (immediateBrake) speedToGo = 0;
+
+        speedToGo += manager.joystickImpactOnSpeed * direction.y;
+
+        velocity.z = Mathf.Lerp(velocity.z, speedToGo, manager.speedAcceleration);
+    }
+
+    void TurnVehicle()
+    {
 
     }
 }
