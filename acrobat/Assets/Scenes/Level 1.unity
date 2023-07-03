@@ -10859,6 +10859,9 @@ MonoBehaviour:
   camDistFromPlayer2: {x: -15, y: 2.5}
   positionCamAvant: {x: 0, y: 0, z: 1}
   lerpSpeedCam: 0.8
+  speedMax: 0
+  speedAcceleration: 0
+  speedDeceleration: 0
 --- !u!43 &1462224685
 Mesh:
   m_ObjectHideFlags: 0
@@ -19318,7 +19321,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: c6c18b56cd5c72e44aaa9715f9294ad3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

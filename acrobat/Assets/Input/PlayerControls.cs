@@ -38,8 +38,26 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Move"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""5c010532-9900-4beb-b4b6-4babcb245422"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Brake"",
+                    ""type"": ""Button"",
+                    ""id"": ""76d61c8f-e866-48be-a4b2-aa6187d07a98"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": "" CompleteBrake"",
+                    ""type"": ""Button"",
+                    ""id"": ""0a4b74d0-7e0e-4bb1-8aa4-7501ad300418"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -72,11 +90,110 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d0cb3569-cc7a-48ce-8ffa-8830d7190b2f"",
-                    ""path"": """",
+                    ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""4a600ae3-09bd-4a95-b454-2141abb61ece"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""19a2e55c-e7e9-4455-b7c5-4fcf2b66c36f"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""8f331ed7-59b0-42b8-9526-0897831e21ce"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""52990bbb-a5c8-4ce0-bf4b-a1831a46613f"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""812b5932-47d1-4b8b-ad57-62f876dda145"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""00c9dcb7-6e0a-47ad-abce-03a6ec1e9a96"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Brake"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bf5cdaa0-0296-48af-8342-72525a33c837"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Brake"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e904a135-0c32-4f71-8d4f-7a5412cf0c59"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": "" CompleteBrake"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9a11b336-4af4-445e-b0dc-12e165bf3e38"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": "" CompleteBrake"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -179,6 +296,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
         m_Movement_Accelerate = m_Movement.FindAction("Accelerate", throwIfNotFound: true);
         m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
+        m_Movement_Brake = m_Movement.FindAction("Brake", throwIfNotFound: true);
+        m_Movement_CompleteBrake = m_Movement.FindAction(" CompleteBrake", throwIfNotFound: true);
         // CameraMove
         m_CameraMove = asset.FindActionMap("CameraMove", throwIfNotFound: true);
         m_CameraMove_ChangeCam = m_CameraMove.FindAction("ChangeCam", throwIfNotFound: true);
@@ -247,12 +366,16 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IMovementActions> m_MovementActionsCallbackInterfaces = new List<IMovementActions>();
     private readonly InputAction m_Movement_Accelerate;
     private readonly InputAction m_Movement_Move;
+    private readonly InputAction m_Movement_Brake;
+    private readonly InputAction m_Movement_CompleteBrake;
     public struct MovementActions
     {
         private @PlayerControls m_Wrapper;
         public MovementActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Accelerate => m_Wrapper.m_Movement_Accelerate;
         public InputAction @Move => m_Wrapper.m_Movement_Move;
+        public InputAction @Brake => m_Wrapper.m_Movement_Brake;
+        public InputAction @CompleteBrake => m_Wrapper.m_Movement_CompleteBrake;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -268,6 +391,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @Brake.started += instance.OnBrake;
+            @Brake.performed += instance.OnBrake;
+            @Brake.canceled += instance.OnBrake;
+            @CompleteBrake.started += instance.OnCompleteBrake;
+            @CompleteBrake.performed += instance.OnCompleteBrake;
+            @CompleteBrake.canceled += instance.OnCompleteBrake;
         }
 
         private void UnregisterCallbacks(IMovementActions instance)
@@ -278,6 +407,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @Brake.started -= instance.OnBrake;
+            @Brake.performed -= instance.OnBrake;
+            @Brake.canceled -= instance.OnBrake;
+            @CompleteBrake.started -= instance.OnCompleteBrake;
+            @CompleteBrake.performed -= instance.OnCompleteBrake;
+            @CompleteBrake.canceled -= instance.OnCompleteBrake;
         }
 
         public void RemoveCallbacks(IMovementActions instance)
@@ -361,6 +496,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnAccelerate(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
+        void OnBrake(InputAction.CallbackContext context);
+        void OnCompleteBrake(InputAction.CallbackContext context);
     }
     public interface ICameraMoveActions
     {

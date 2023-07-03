@@ -17,8 +17,10 @@ public class CameraGestion : MonoBehaviour
     private void Start()
     {
         manager.controls.CameraMove.ChangeCam.performed += dontCare => ChangeCam();
+
         manager.controls.CameraMove.LookBack.performed += changeVariable => lookBehind = true;
         manager.controls.CameraMove.LookBack.canceled += changeVariable => lookBehind = false;
+
         manager.controls.CameraMove.Rotation.performed += useVariable => cameraRot = useVariable.ReadValue<Vector2>();
         manager.controls.CameraMove.Rotation.canceled += useVariable => cameraRot = Vector2.zero;
     }
