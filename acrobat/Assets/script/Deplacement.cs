@@ -43,20 +43,23 @@ public class Deplacement : MonoBehaviour
 
     void speedGestion()
     {
-        speedToGo += (accelerationInputValue * manager.speedMax);
+        speedToGo = (accelerationInputValue * manager.speedMax);
 
         if (speedToGo <= 0) speedToGo -= decelerationInputValue * (manager.speedMax / manager.speedDeceleration);
-        else speedToGo -= decelerationInputValue * velocity.magnitude;
+        else speedToGo -= decelerationInputValue;
 
         if (immediateBrake) speedToGo = 0;
 
         speedToGo += manager.joystickImpactOnSpeed * direction.y;
 
-        velocity.z = Mathf.Lerp(velocity.z, speedToGo, manager.speedAcceleration);
+        speedToGo /= 10;
+
+        velocity.z = Mathf.Lerp(velocity.z, speedToGo, manager.lerpAcceleration);
     }
 
     void TurnVehicle()
     {
-
+        rb.MoveRotation(new Quaternion(0, 0, direction.x * (1f - accelerationInputValue), 0));
+        velocity.x = Mathf.Lerp(velocity.x, (direction.x * (accelerationInputValue/2)), manager.lerpRotation);
     }
 }
