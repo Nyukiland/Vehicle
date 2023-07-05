@@ -52,14 +52,13 @@ public class Deplacement : MonoBehaviour
 
         speedToGo += manager.joystickImpactOnSpeed * direction.y;
 
-        speedToGo /= 10;
-
         velocity.z = Mathf.Lerp(velocity.z, speedToGo, manager.lerpAcceleration);
     }
 
     void TurnVehicle()
     {
-        rb.MoveRotation(new Quaternion(0, 0, direction.x * (1f - accelerationInputValue), 0));
+        Quaternion rota = new Quaternion(0, 0, direction.x * (1f - accelerationInputValue), 0);
+        rb.MoveRotation(rota.normalized);
         velocity.x = Mathf.Lerp(velocity.x, (direction.x * (accelerationInputValue/2)), manager.lerpRotation);
     }
 }
