@@ -20,8 +20,10 @@ public class Deplacement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         manager.controls.Movement.Accelerate.performed += V => accelerationInputValue = V.ReadValue <float>();
+        manager.controls.Movement.Accelerate.canceled += V => accelerationInputValue = 0;
 
         manager.controls.Movement.Brake.performed += V => decelerationInputValue = V.ReadValue <float>();
+        manager.controls.Movement.Brake.canceled += V => decelerationInputValue = 0;
 
         manager.controls.Movement.CompleteBrake.performed += V => immediateBrake = true;
         manager.controls.Movement.CompleteBrake.canceled += V => immediateBrake = false;
@@ -39,8 +41,6 @@ public class Deplacement : MonoBehaviour
         TurnVehicle();
 
         rb.velocity = velocity;
-
-        Debug.Log(velocity);
     }
 
     void speedGestion()
@@ -54,13 +54,14 @@ public class Deplacement : MonoBehaviour
 
         speedToGo += manager.joystickImpactOnSpeed * direction.y;
 
-        velocity.z = Mathf.Lerp(velocity.z, speedToGo, manager.lerpAcceleration);
+        velocity = transform.forward *  speedToGo;
+        
     }
 
     void TurnVehicle()
     {
-        Quaternion rota = Quaternion.Euler(0, (direction.x * (1f - accelerationInputValue)), 0);
+        Quaternion rota = Quaternion.Euler(0, transform.eulerAngles.y +(direction.x * (1.75f - accelerationInputValue)), 0);
         rb.MoveRotation(rota);
-        velocity.x = Mathf.Lerp(velocity.x, (direction.x * (accelerationInputValue/2)), manager.lerpRotation);
+        velocity += transform.right * (direction.x * (accelerationInputValue/2));
     }
 }

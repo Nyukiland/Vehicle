@@ -8493,10 +8493,8 @@ MonoBehaviour:
   positionCamAvant: {x: 0, y: 0, z: 1}
   lerpSpeedCam: 0.8
   speedMax: 25
-  lerpAcceleration: 0.402
   speedDeceleration: 3
   joystickImpactOnSpeed: 0.275
-  lerpRotation: 0.201
 --- !u!43 &1462224685
 Mesh:
   m_ObjectHideFlags: 0
