@@ -31,7 +31,7 @@ public class Deplacement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         velocity = rb.velocity;
 
@@ -39,6 +39,8 @@ public class Deplacement : MonoBehaviour
         TurnVehicle();
 
         rb.velocity = velocity;
+
+        Debug.Log(velocity);
     }
 
     void speedGestion()
@@ -57,8 +59,8 @@ public class Deplacement : MonoBehaviour
 
     void TurnVehicle()
     {
-        Quaternion rota = new Quaternion(0, 0, direction.x * (1f - accelerationInputValue), 0);
-        rb.MoveRotation(rota.normalized);
+        Quaternion rota = Quaternion.Euler(0, (direction.x * (1f - accelerationInputValue)), 0);
+        rb.MoveRotation(rota);
         velocity.x = Mathf.Lerp(velocity.x, (direction.x * (accelerationInputValue/2)), manager.lerpRotation);
     }
 }

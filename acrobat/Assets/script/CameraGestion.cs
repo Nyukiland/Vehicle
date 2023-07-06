@@ -46,7 +46,7 @@ public class CameraGestion : MonoBehaviour
         if (camState == 0) camStatePos = manager.camDistFromPlayer1;
         else if (camState == 1) camStatePos = manager.camDistFromPlayer2;
 
-        Debug.Log(cameraRot);
+        
 
         if (camState == 2)
         {
