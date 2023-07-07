@@ -62,6 +62,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""d55fcf2c-9b6c-4084-a8f7-1bb11b820ab3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""crunch"",
+                    ""type"": ""Button"",
+                    ""id"": ""71ccec2d-cb0f-4577-af31-7da5c45a10d0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -196,6 +214,50 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": "" CompleteBrake"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fc29cde0-b7b6-469b-b787-d4c684fbde6c"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f280af02-dcad-475d-8523-9eedb560e284"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4148c4df-7eb5-444f-91c2-431e6528acce"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""crunch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3962f46d-3bc1-4236-a4a6-fffcb2008937"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""crunch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -298,6 +360,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Movement_Move = m_Movement.FindAction("Move", throwIfNotFound: true);
         m_Movement_Brake = m_Movement.FindAction("Brake", throwIfNotFound: true);
         m_Movement_CompleteBrake = m_Movement.FindAction(" CompleteBrake", throwIfNotFound: true);
+        m_Movement_jump = m_Movement.FindAction("jump", throwIfNotFound: true);
+        m_Movement_crunch = m_Movement.FindAction("crunch", throwIfNotFound: true);
         // CameraMove
         m_CameraMove = asset.FindActionMap("CameraMove", throwIfNotFound: true);
         m_CameraMove_ChangeCam = m_CameraMove.FindAction("ChangeCam", throwIfNotFound: true);
@@ -368,6 +432,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Movement_Move;
     private readonly InputAction m_Movement_Brake;
     private readonly InputAction m_Movement_CompleteBrake;
+    private readonly InputAction m_Movement_jump;
+    private readonly InputAction m_Movement_crunch;
     public struct MovementActions
     {
         private @PlayerControls m_Wrapper;
@@ -376,6 +442,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Movement_Move;
         public InputAction @Brake => m_Wrapper.m_Movement_Brake;
         public InputAction @CompleteBrake => m_Wrapper.m_Movement_CompleteBrake;
+        public InputAction @jump => m_Wrapper.m_Movement_jump;
+        public InputAction @crunch => m_Wrapper.m_Movement_crunch;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -397,6 +465,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @CompleteBrake.started += instance.OnCompleteBrake;
             @CompleteBrake.performed += instance.OnCompleteBrake;
             @CompleteBrake.canceled += instance.OnCompleteBrake;
+            @jump.started += instance.OnJump;
+            @jump.performed += instance.OnJump;
+            @jump.canceled += instance.OnJump;
+            @crunch.started += instance.OnCrunch;
+            @crunch.performed += instance.OnCrunch;
+            @crunch.canceled += instance.OnCrunch;
         }
 
         private void UnregisterCallbacks(IMovementActions instance)
@@ -413,6 +487,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @CompleteBrake.started -= instance.OnCompleteBrake;
             @CompleteBrake.performed -= instance.OnCompleteBrake;
             @CompleteBrake.canceled -= instance.OnCompleteBrake;
+            @jump.started -= instance.OnJump;
+            @jump.performed -= instance.OnJump;
+            @jump.canceled -= instance.OnJump;
+            @crunch.started -= instance.OnCrunch;
+            @crunch.performed -= instance.OnCrunch;
+            @crunch.canceled -= instance.OnCrunch;
         }
 
         public void RemoveCallbacks(IMovementActions instance)
@@ -498,6 +578,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnBrake(InputAction.CallbackContext context);
         void OnCompleteBrake(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnCrunch(InputAction.CallbackContext context);
     }
     public interface ICameraMoveActions
     {

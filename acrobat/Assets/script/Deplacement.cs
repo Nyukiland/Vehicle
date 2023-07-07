@@ -39,6 +39,7 @@ public class Deplacement : MonoBehaviour
 
         speedGestion();
         TurnVehicle();
+        JumpAndLow();
 
         rb.velocity = velocity;
     }
@@ -54,7 +55,7 @@ public class Deplacement : MonoBehaviour
 
         speedToGo += manager.joystickImpactOnSpeed * direction.y;
 
-        velocity = transform.forward *  speedToGo;
+        velocity += transform.forward *  speedToGo;
         
     }
 
@@ -63,5 +64,10 @@ public class Deplacement : MonoBehaviour
         Quaternion rota = Quaternion.Euler(0, transform.eulerAngles.y +(direction.x * (1.75f - accelerationInputValue)), 0);
         rb.MoveRotation(rota);
         velocity += transform.right * (direction.x * (accelerationInputValue/2));
+    }
+
+    void JumpAndLow()
+    {
+        
     }
 }

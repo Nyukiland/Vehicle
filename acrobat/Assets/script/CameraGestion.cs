@@ -13,6 +13,8 @@ public class CameraGestion : MonoBehaviour
     bool lookBehind;
     Vector2 cameraRot;
 
+    Vector3 smoothVelocity = Vector3.zero;
+
 
     private void Start()
     {
@@ -30,8 +32,8 @@ public class CameraGestion : MonoBehaviour
     void Update()
     {
         CamPosition();
-        motoPivot.transform.rotation = Quaternion.Lerp(motoPivot.transform.rotation, moto.transform.rotation, manager.lerpSpeedCam);
-        motoPivot.transform.position = Vector3.Lerp(motoPivot.transform.position, moto.transform.position, manager.lerpSpeedCam);
+        motoPivot.transform.rotation = Quaternion.Lerp(motoPivot.transform.rotation, moto.transform.rotation, manager.followSpeedCam);
+        motoPivot.transform.position = Vector3.SmoothDamp(motoPivot.transform.position, moto.transform.position, ref smoothVelocity, manager.followSpeedCam);
     }
 
     void ChangeCam()
