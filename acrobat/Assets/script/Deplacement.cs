@@ -9,10 +9,16 @@ public class Deplacement : MonoBehaviour
     float accelerationInputValue;
     float decelerationInputValue;
     bool immediateBrake;
-    float speedToGo;
     Vector2 direction;
+
+    float speedToGo;
     Vector3 velocity;
     Rigidbody rb;
+
+    bool grounded;
+
+    bool jumpCharge;
+    float valueJump;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +36,11 @@ public class Deplacement : MonoBehaviour
 
         manager.controls.Movement.Move.performed += V => direction = V.ReadValue<Vector2>();
         manager.controls.Movement.Move.canceled += V => direction = Vector2.zero;
+
+        manager.controls.Movement.crunch.performed += ctx => Crunching();
+
+        manager.controls.Movement.jump.started += ctx => jumpCharge = true;
+        manager.controls.Movement.jump.canceled += ctx => jumpCharge = false;
     }
 
     // Update is called once per frame
@@ -39,7 +50,8 @@ public class Deplacement : MonoBehaviour
 
         speedGestion();
         TurnVehicle();
-        JumpAndLow();
+        Jumping();
+        GravtyControl();
 
         rb.velocity = velocity;
     }
@@ -66,8 +78,43 @@ public class Deplacement : MonoBehaviour
         velocity += transform.right * (direction.x * (accelerationInputValue/2));
     }
 
-    void JumpAndLow()
+    void GravtyControl()
     {
+        RaycastHit hit;
+        float lenghtOfRaycast = GetComponent<BoxCollider>().size.z * manager.heightForGrounded;
+
+        if (Physics.Raycast(transform.position, -transform.up, out hit, lenghtOfRaycast))
+        {
+            grounded = true;
+        }
+        else
+        {
+            grounded = false;
+            velocity.y -= manager.gravityOfVehicle;
+        }
+    }
+
+    void Jumping()
+    {
+        if (!grounded) return;
         
+        if (jumpCharge)
+        {
+            valueJump += manager.jumpForce * Time.deltaTime;
+        }
+        else if (!jumpCharge && valueJump !=0)
+        {
+            velocity.y = valueJump;
+            valueJump = 0;
+        }
+    }
+
+    void Crunching()
+    {
+        if (!grounded) velocity.y -= manager.crunchFalling;
+        else
+        {
+
+        }
     }
 }
