@@ -20,6 +20,10 @@ public class Deplacement : MonoBehaviour
     bool jumpCharge;
     float valueJump;
 
+    float supposedSpeed;
+
+    bool crunch;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +41,8 @@ public class Deplacement : MonoBehaviour
         manager.controls.Movement.Move.performed += V => direction = V.ReadValue<Vector2>();
         manager.controls.Movement.Move.canceled += V => direction = Vector2.zero;
 
-        manager.controls.Movement.crunch.performed += ctx => Crunching();
+        manager.controls.Movement.crunch.performed += ctx => crunch = true;
+        manager.controls.Movement.crunch.canceled += ctx => crunch = false;
 
         manager.controls.Movement.jump.started += ctx => jumpCharge = true;
         manager.controls.Movement.jump.canceled += ctx => jumpCharge = false;
@@ -46,39 +51,57 @@ public class Deplacement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        velocity = rb.velocity;
-
-        speedGestion();
-        TurnVehicle();
-        Jumping();
-        GravtyControl();
+        velocity = speedGestion() + TurnVehicle();
+        velocity.y += rb.velocity.y + Jumping() + GravtyControl() + Crunching();
 
         rb.velocity = velocity;
     }
 
-    void speedGestion()
+
+    Vector3 speedGestion()
     {
         speedToGo = (accelerationInputValue * manager.speedMax);
 
-        if (speedToGo <= 0) speedToGo -= decelerationInputValue * (manager.speedMax / manager.speedDeceleration);
+        if (speedToGo <= 0) speedToGo -= decelerationInputValue * manager.maxBackwardSpeed;
         else speedToGo -= decelerationInputValue;
+        speedToGo += manager.joystickImpactOnSpeed * direction.y;
 
         if (immediateBrake) speedToGo = 0;
 
-        speedToGo += manager.joystickImpactOnSpeed * direction.y;
-
-        velocity += transform.forward *  speedToGo;
+        return transform.forward *  MathForSpeed(speedToGo);
         
     }
 
-    void TurnVehicle()
+    float MathForSpeed(float valeurToGo)
+    {
+        if (valeurToGo > supposedSpeed)
+        {
+            supposedSpeed += manager.acceleration * Time.deltaTime;
+        }
+        else if (valeurToGo < supposedSpeed)
+        {
+            supposedSpeed -= manager.deceleration * Time.deltaTime;
+        }
+        else if (valeurToGo < supposedSpeed && immediateBrake)
+        {
+            supposedSpeed += manager.acceleration * 3 * Time.deltaTime;
+        }
+        else if (valeurToGo > supposedSpeed && immediateBrake)
+        {
+            supposedSpeed -= manager.acceleration * 3 * Time.deltaTime;
+        }
+
+        return supposedSpeed;
+    }
+
+    Vector3 TurnVehicle()
     {
         Quaternion rota = Quaternion.Euler(0, transform.eulerAngles.y +(direction.x * (1.75f - accelerationInputValue)), 0);
         rb.MoveRotation(rota);
-        velocity += transform.right * (direction.x * (accelerationInputValue/2));
+        return transform.right * (direction.x * (accelerationInputValue/2));
     }
 
-    void GravtyControl()
+    float GravtyControl()
     {
         RaycastHit hit;
         float lenghtOfRaycast = GetComponent<BoxCollider>().size.z * manager.heightForGrounded;
@@ -86,35 +109,53 @@ public class Deplacement : MonoBehaviour
         if (Physics.Raycast(transform.position, -transform.up, out hit, lenghtOfRaycast))
         {
             grounded = true;
+            return 0;
         }
         else
         {
             grounded = false;
-            velocity.y -= manager.gravityOfVehicle;
+            return -manager.gravityOfVehicle * Time.deltaTime;
         }
     }
 
-    void Jumping()
+    float Jumping()
     {
-        if (!grounded) return;
+        if (!grounded) return 0;
         
         if (jumpCharge)
         {
-            valueJump += manager.jumpForce * Time.deltaTime;
+            return manager.jumpForce;
         }
-        else if (!jumpCharge && valueJump !=0)
+        else
         {
-            velocity.y = valueJump;
-            valueJump = 0;
+            return 0;
         }
     }
 
-    void Crunching()
+    float Crunching()
     {
-        if (!grounded) velocity.y -= manager.crunchFalling;
+        if (crunch)
+        {
+            GetComponent<BoxCollider>().size = new Vector3(1, 0.5f, 1);
+            GetComponent<BoxCollider>().center = new Vector3(0, -0.25f, 0);
+
+            if (!grounded) return -manager.crunchFalling;
+            else return 0;
+        }
         else
         {
+            GetComponent<BoxCollider>().size = new Vector3(1, 1, 1);
+            GetComponent<BoxCollider>().center = Vector3.zero;
+            return 0;
+        }
+    }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Wall"))
+        {
+            supposedSpeed = 0;
+            velocity = Vector3.zero;
         }
     }
 }

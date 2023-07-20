@@ -29,11 +29,9 @@ public class CameraGestion : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         CamPosition();
-        motoPivot.transform.rotation = Quaternion.Lerp(motoPivot.transform.rotation, moto.transform.rotation, manager.followSpeedCam);
-        motoPivot.transform.position = Vector3.SmoothDamp(motoPivot.transform.position, moto.transform.position, ref smoothVelocity, manager.followSpeedCam);
     }
 
     void ChangeCam()
@@ -59,6 +57,8 @@ public class CameraGestion : MonoBehaviour
         }
         else
         {
+            followAndRot();
+
             Camera.main.transform.LookAt(transform);
 
             if (lookBehind)
@@ -75,5 +75,11 @@ public class CameraGestion : MonoBehaviour
             }
             transform.localEulerAngles = new Vector3(cameraRot.y * 90, -cameraRot.x * 90, 0);
         }
+    }
+
+    void followAndRot()
+    {
+        motoPivot.transform.localRotation = moto.transform.localRotation;
+        motoPivot.transform.position = Vector3.SmoothDamp(motoPivot.transform.position, moto.transform.position, ref smoothVelocity, manager.followSpeedCam);
     }
 }

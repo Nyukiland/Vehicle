@@ -25,9 +25,12 @@ public class AllVariable : MonoBehaviour
     [Header("Movement Variable")]
 
     [Tooltip("maximum speed of the vehicle")] public float speedMax;
-    [Tooltip ("decrease power")] [Range (1f, 10f)] public float speedDeceleration;
+    [Tooltip ("maximum speed of the vehicle when he goes backward")] public float maxBackwardSpeed;
+
+    [Tooltip("time for the vehicle to reach it's full speed")] [Range(1f, 5f)] public float acceleration;
+    [Tooltip("time for the vehicle to decrease his speed")] [Range(1f, 5f)] public float deceleration;
+
     [Tooltip ("amount of speed added to the vehicle when the joystick is forward or backward")] [Range (0f, 1f)] public float joystickImpactOnSpeed;
-    [Tooltip ("amount of speed added to the vehicle when the joystick is forward or backward")] public float gravity;
     [Tooltip("the lower the value is the closer to the ground it goes")] [Range(1f, 1.5f)] public float heightForGrounded;
     [Tooltip("speed applied to the fall (must be positive)")] public float gravityOfVehicle;
     [Tooltip("speed applied to the fall when crunching (must be positive)")] public float crunchFalling;
