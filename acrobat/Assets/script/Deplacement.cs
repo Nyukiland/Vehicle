@@ -17,9 +17,6 @@ public class Deplacement : MonoBehaviour
 
     bool grounded;
 
-    bool jumpCharge;
-    float valueJump;
-
     float supposedSpeed;
 
     bool crunch;
@@ -43,16 +40,13 @@ public class Deplacement : MonoBehaviour
 
         manager.controls.Movement.crunch.performed += ctx => crunch = true;
         manager.controls.Movement.crunch.canceled += ctx => crunch = false;
-
-        manager.controls.Movement.jump.started += ctx => jumpCharge = true;
-        manager.controls.Movement.jump.canceled += ctx => jumpCharge = false;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         velocity = speedGestion() + TurnVehicle();
-        velocity.y += rb.velocity.y + Jumping() + GravtyControl() + Crunching();
+        velocity.y += rb.velocity.y + GravtyControl() + Crunching();
 
         rb.velocity = velocity;
     }
@@ -115,20 +109,6 @@ public class Deplacement : MonoBehaviour
         {
             grounded = false;
             return -manager.gravityOfVehicle * Time.deltaTime;
-        }
-    }
-
-    float Jumping()
-    {
-        if (!grounded) return 0;
-        
-        if (jumpCharge)
-        {
-            return manager.jumpForce;
-        }
-        else
-        {
-            return 0;
         }
     }
 

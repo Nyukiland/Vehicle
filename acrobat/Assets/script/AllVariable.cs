@@ -34,7 +34,6 @@ public class AllVariable : MonoBehaviour
     [Tooltip("the lower the value is the closer to the ground it goes")] [Range(1f, 1.5f)] public float heightForGrounded;
     [Tooltip("speed applied to the fall (must be positive)")] public float gravityOfVehicle;
     [Tooltip("speed applied to the fall when crunching (must be positive)")] public float crunchFalling;
-    [Tooltip("force by second that will be used for the jump (must be positive)")] public float jumpForce;
 
 
     private void Awake()
