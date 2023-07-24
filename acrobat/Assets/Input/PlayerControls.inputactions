@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SlowMo",
+                    "type": "Button",
+                    "id": "2985172b-7ec9-41d5-b131-1dff24a97367",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -205,6 +214,28 @@
                     "action": "crunch",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8574d136-0977-4d46-beb0-2add730c73e1",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SlowMo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dac380af-1dc1-41ff-98e2-14ba3dc99d98",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SlowMo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -293,6 +324,45 @@
                     "processors": "",
                     "groups": "",
                     "action": "LookBack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "80e08d65-db30-412e-8b56-73f2e9aadf4c",
+            "actions": [
+                {
+                    "name": "pause",
+                    "type": "Button",
+                    "id": "41ed57bc-4b6e-4528-a951-22dae39af693",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "883dbb30-d02a-4f92-ab3f-6d075150c5ef",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c6502177-a53c-4140-9eb4-cffedd2459ca",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -38,6 +38,8 @@ public class Deplacement : MonoBehaviour
 
     float crunchShapeKey = 0;
 
+    bool slowmo;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,6 +59,9 @@ public class Deplacement : MonoBehaviour
 
         manager.controls.Movement.crunch.performed += ctx => crunch = true;
         manager.controls.Movement.crunch.canceled += ctx => crunch = false;
+
+        manager.controls.Movement.SlowMo.performed += ctx => slowmo = true;
+        manager.controls.Movement.SlowMo.canceled += ctx => slowmo = false;
     }
 
     // Update is called once per frame
@@ -65,6 +70,7 @@ public class Deplacement : MonoBehaviour
         velocity = speedGestion() + TurnVehicle();
         velocity.y += rb.velocity.y + GravtyControl();
         Crunching();
+        SlowMotionActivation();
 
         rb.velocity = velocity;
     }
@@ -167,6 +173,9 @@ public class Deplacement : MonoBehaviour
 
 
         Quaternion rota = Quaternion.Euler(0, transform.eulerAngles.y +(direction.x * (1.75f - (Mathf.Abs(supposedSpeed)/manager.speedMax))), 0);
+        if (slowmo && supposedSpeed > 25) rota = Quaternion.Euler(0, transform.eulerAngles.y + ((direction.x * (1.75f - (Mathf.Abs(supposedSpeed) / manager.speedMax)))*2), 0);
+        if (slowmo && supposedSpeed > 60) rota = Quaternion.Euler(0, transform.eulerAngles.y + ((direction.x * (1.75f - (Mathf.Abs(supposedSpeed) / manager.speedMax))) * 3), 0);
+        if (crunch) rota = Quaternion.Euler(0, transform.eulerAngles.y + ((direction.x * (1.75f - (Mathf.Abs(supposedSpeed) / manager.speedMax))) /1.5f), 0);
         rb.MoveRotation(rota);
         
 
@@ -206,6 +215,26 @@ public class Deplacement : MonoBehaviour
             GetComponent<BoxCollider>().center = Vector3.zero;
 
             speedCrunch = 0;
+        }
+    }
+
+    void SlowMotionActivation()
+    {
+        if (manager.isPause) return;
+
+        if(slowmo)
+        {
+            Time.timeScale = 0.5f;
+            ChromaticAberration chrom;
+            cam.GetComponent<Volume>().profile.TryGet<ChromaticAberration>(out chrom);
+            chrom.intensity.value = 1;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            ChromaticAberration chrom;
+            cam.GetComponent<Volume>().profile.TryGet<ChromaticAberration>(out chrom);
+            chrom.intensity.value = 0;
         }
     }
 

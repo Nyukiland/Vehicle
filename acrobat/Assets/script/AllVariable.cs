@@ -36,6 +36,10 @@ public class AllVariable : MonoBehaviour
     [Tooltip("speed applied to the fall when crunching (must be positive)")] public float crunchFalling;
 
 
+
+    //over
+    public bool isPause = false;
+
     private void Awake()
     {
         controls = new PlayerControls();

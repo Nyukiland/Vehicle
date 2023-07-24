@@ -71,6 +71,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SlowMo"",
+                    ""type"": ""Button"",
+                    ""id"": ""2985172b-7ec9-41d5-b131-1dff24a97367"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -227,6 +236,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""crunch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8574d136-0977-4d46-beb0-2add730c73e1"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SlowMo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dac380af-1dc1-41ff-98e2-14ba3dc99d98"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SlowMo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -319,6 +350,45 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""80e08d65-db30-412e-8b56-73f2e9aadf4c"",
+            ""actions"": [
+                {
+                    ""name"": ""pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""41ed57bc-4b6e-4528-a951-22dae39af693"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""883dbb30-d02a-4f92-ab3f-6d075150c5ef"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c6502177-a53c-4140-9eb4-cffedd2459ca"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -330,11 +400,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Movement_Brake = m_Movement.FindAction("Brake", throwIfNotFound: true);
         m_Movement_CompleteBrake = m_Movement.FindAction(" CompleteBrake", throwIfNotFound: true);
         m_Movement_crunch = m_Movement.FindAction("crunch", throwIfNotFound: true);
+        m_Movement_SlowMo = m_Movement.FindAction("SlowMo", throwIfNotFound: true);
         // CameraMove
         m_CameraMove = asset.FindActionMap("CameraMove", throwIfNotFound: true);
         m_CameraMove_ChangeCam = m_CameraMove.FindAction("ChangeCam", throwIfNotFound: true);
         m_CameraMove_Rotation = m_CameraMove.FindAction("Rotation", throwIfNotFound: true);
         m_CameraMove_LookBack = m_CameraMove.FindAction("LookBack", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_pause = m_UI.FindAction("pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -401,6 +475,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Movement_Brake;
     private readonly InputAction m_Movement_CompleteBrake;
     private readonly InputAction m_Movement_crunch;
+    private readonly InputAction m_Movement_SlowMo;
     public struct MovementActions
     {
         private @PlayerControls m_Wrapper;
@@ -410,6 +485,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Brake => m_Wrapper.m_Movement_Brake;
         public InputAction @CompleteBrake => m_Wrapper.m_Movement_CompleteBrake;
         public InputAction @crunch => m_Wrapper.m_Movement_crunch;
+        public InputAction @SlowMo => m_Wrapper.m_Movement_SlowMo;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -434,6 +510,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @crunch.started += instance.OnCrunch;
             @crunch.performed += instance.OnCrunch;
             @crunch.canceled += instance.OnCrunch;
+            @SlowMo.started += instance.OnSlowMo;
+            @SlowMo.performed += instance.OnSlowMo;
+            @SlowMo.canceled += instance.OnSlowMo;
         }
 
         private void UnregisterCallbacks(IMovementActions instance)
@@ -453,6 +532,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @crunch.started -= instance.OnCrunch;
             @crunch.performed -= instance.OnCrunch;
             @crunch.canceled -= instance.OnCrunch;
+            @SlowMo.started -= instance.OnSlowMo;
+            @SlowMo.performed -= instance.OnSlowMo;
+            @SlowMo.canceled -= instance.OnSlowMo;
         }
 
         public void RemoveCallbacks(IMovementActions instance)
@@ -532,6 +614,52 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public CameraMoveActions @CameraMove => new CameraMoveActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+    private readonly InputAction m_UI_pause;
+    public struct UIActions
+    {
+        private @PlayerControls m_Wrapper;
+        public UIActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @pause => m_Wrapper.m_UI_pause;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void AddCallbacks(IUIActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+            @pause.started += instance.OnPause;
+            @pause.performed += instance.OnPause;
+            @pause.canceled += instance.OnPause;
+        }
+
+        private void UnregisterCallbacks(IUIActions instance)
+        {
+            @pause.started -= instance.OnPause;
+            @pause.performed -= instance.OnPause;
+            @pause.canceled -= instance.OnPause;
+        }
+
+        public void RemoveCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUIActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UIActions @UI => new UIActions(this);
     public interface IMovementActions
     {
         void OnAccelerate(InputAction.CallbackContext context);
@@ -539,11 +667,16 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnBrake(InputAction.CallbackContext context);
         void OnCompleteBrake(InputAction.CallbackContext context);
         void OnCrunch(InputAction.CallbackContext context);
+        void OnSlowMo(InputAction.CallbackContext context);
     }
     public interface ICameraMoveActions
     {
         void OnChangeCam(InputAction.CallbackContext context);
         void OnRotation(InputAction.CallbackContext context);
         void OnLookBack(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnPause(InputAction.CallbackContext context);
     }
 }
