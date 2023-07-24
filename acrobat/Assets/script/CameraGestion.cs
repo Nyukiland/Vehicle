@@ -74,7 +74,7 @@ public class CameraGestion : MonoBehaviour
                 Camera.main.transform.localPosition = new Vector3(0, camStatePos.y, camStatePos.x);
                 Camera.main.transform.localRotation = new Quaternion(0, 0, 0, 0);
             }
-            transform.localEulerAngles = new Vector3(cameraRot.y * 90, -cameraRot.x * 90, 0);
+            transform.localEulerAngles = new Vector3(Mathf.Clamp(cameraRot.y * 90, 0, 90), -cameraRot.x * 90, 0);
         }
     }
 

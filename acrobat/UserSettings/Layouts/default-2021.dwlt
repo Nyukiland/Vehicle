@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 93
+  controlID: 9912
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 94
+  controlID: 9840
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 95
+  controlID: 9841
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -222,7 +222,7 @@ MonoBehaviour:
   - {fileID: 18}
   - {fileID: 19}
   m_Selected: 0
-  m_LastSelected: 0
+  m_LastSelected: 1
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 19
+  controlID: 9889
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -267,8 +267,8 @@ MonoBehaviour:
     y: 0
     width: 640
     height: 449
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -324,7 +324,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 43
+  controlID: 9913
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -508,7 +508,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 1c35f9ffc61bfcfffaf9ffffd6740000e8740000fe740000047500000e75000016750000
+      m_ExpandedIDs: 780cfdff740dfdffc60ffdff9035ffff6857fffff4faffff8e7400005675000098750000c8750000e0750000e6750000f6750000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -524,7 +524,7 @@ MonoBehaviour:
         m_IsRenaming: 0
         m_OriginalEventType: 11
         m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 11}
+        m_ClientGUIView: {fileID: 8}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -814,9 +814,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 418.67737, y: 269.328, z: 94.23549}
+    m_Target: {x: 199.29526, y: -861.72845, z: -216.78319}
     speed: 2
-    m_Value: {x: 418.67737, y: 269.328, z: 94.23549}
+    m_Value: {x: 199.29526, y: -861.72845, z: -216.78319}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -863,13 +863,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.0042087785, y: -0.03508964, z: 0.00046689727, w: -0.99958014}
+    m_Target: {x: 0.41781875, y: 0.5760371, z: -0.44271135, w: 0.5459286}
     speed: 2
-    m_Value: {x: 0.0042079166, y: -0.035082456, z: 0.00046680166, w: -0.99937546}
+    m_Value: {x: 0.41773045, y: 0.5759154, z: -0.4426178, w: 0.54581326}
   m_Size:
-    m_Target: 287.01428
+    m_Target: 757.6751
     speed: 2
-    m_Value: 287.01428
+    m_Value: 757.6751
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -917,7 +917,7 @@ MonoBehaviour:
     x: 473
     y: 73
     width: 1441
-    height: 748
+    height: 829
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -947,9 +947,9 @@ MonoBehaviour:
     m_SearchString: 
   m_ActionsTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: f99e8b58
-    m_LastClickedID: 1485545209
-    m_ExpandedIDs: 3740a688f321ca974d0ef59eccd732a2ca96b8c752d1e41376fafe3a494cd641f99e8b5873c9e763ff263e6e
+    m_SelectedIDs: cbb6b5b9
+    m_LastClickedID: -1179273525
+    m_ExpandedIDs: 3740a688f321ca974d0ef59eccd732a2ca96b8c777f13ef052d1e41376fafe3a494cd64198d7114df99e8b5841003a5b73c9e763ff263e6e37aa627f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -971,11 +971,11 @@ MonoBehaviour:
     m_AdvancedDropdownState:
       states:
       - itemId: 371857150
-        selectedIndex: 0
+        selectedIndex: 2
         scroll: {x: 0, y: 0}
       - itemId: 1275948795
         selectedIndex: -1
-        scroll: {x: 0, y: 0}
+        scroll: {x: 0, y: 63.5}
       - itemId: 403810634
         selectedIndex: 0
         scroll: {x: 0, y: 0}
@@ -1024,6 +1024,18 @@ MonoBehaviour:
       - itemId: 1923899077
         selectedIndex: -1
         scroll: {x: 0, y: 0}
+      - itemId: -1790278178
+        selectedIndex: -1
+        scroll: {x: 0, y: 0}
+      - itemId: -1542029941
+        selectedIndex: -1
+        scroll: {x: 0, y: 0}
+      - itemId: -630248049
+        selectedIndex: -1
+        scroll: {x: 0, y: 97.5}
+      - itemId: 806481549
+        selectedIndex: -1
+        scroll: {x: 0, y: 0}
     m_ManualPathEditMode: 0
   m_ActionAssetManager:
     m_AssetObjectForEditing: {fileID: 0}
@@ -1051,6 +1063,10 @@ MonoBehaviour:
       \"interactions\": \"\",\n                    \"initialStateCheck\": false\n               
       },\n                {\n                    \"name\": \"crunch\",\n                   
       \"type\": \"Button\",\n                    \"id\": \"71ccec2d-cb0f-4577-af31-7da5c45a10d0\",\n                   
+      \"expectedControlType\": \"Button\",\n                    \"processors\": \"\",\n                   
+      \"interactions\": \"\",\n                    \"initialStateCheck\": false\n               
+      },\n                {\n                    \"name\": \"SlowMo\",\n                   
+      \"type\": \"Button\",\n                    \"id\": \"2985172b-7ec9-41d5-b131-1dff24a97367\",\n                   
       \"expectedControlType\": \"Button\",\n                    \"processors\": \"\",\n                   
       \"interactions\": \"\",\n                    \"initialStateCheck\": false\n               
       }\n            ],\n            \"bindings\": [\n                {\n                   
@@ -1125,6 +1141,16 @@ MonoBehaviour:
       \"path\": \"<Keyboard>/e\",\n                    \"interactions\": \"\",\n                   
       \"processors\": \"\",\n                    \"groups\": \"\",\n                   
       \"action\": \"crunch\",\n                    \"isComposite\": false,\n                   
+      \"isPartOfComposite\": false\n                },\n                {\n                   
+      \"name\": \"\",\n                    \"id\": \"8574d136-0977-4d46-beb0-2add730c73e1\",\n                   
+      \"path\": \"<Gamepad>/buttonSouth\",\n                    \"interactions\":
+      \"\",\n                    \"processors\": \"\",\n                    \"groups\":
+      \"\",\n                    \"action\": \"SlowMo\",\n                    \"isComposite\":
+      false,\n                    \"isPartOfComposite\": false\n                },\n               
+      {\n                    \"name\": \"\",\n                    \"id\": \"dac380af-1dc1-41ff-98e2-14ba3dc99d98\",\n                   
+      \"path\": \"<Keyboard>/q\",\n                    \"interactions\": \"\",\n                   
+      \"processors\": \"\",\n                    \"groups\": \"\",\n                   
+      \"action\": \"SlowMo\",\n                    \"isComposite\": false,\n                   
       \"isPartOfComposite\": false\n                }\n            ]\n        },\n       
       {\n            \"name\": \"CameraMove\",\n            \"id\": \"845c738b-73b9-48d8-a238-bed26f1e0470\",\n           
       \"actions\": [\n                {\n                    \"name\": \"ChangeCam\",\n                   
@@ -1167,7 +1193,24 @@ MonoBehaviour:
       \"\",\n                    \"processors\": \"\",\n                    \"groups\":
       \"\",\n                    \"action\": \"LookBack\",\n                    \"isComposite\":
       false,\n                    \"isPartOfComposite\": false\n                }\n           
-      ]\n        }\n    ],\n    \"controlSchemes\": []\n}"
+      ]\n        },\n        {\n            \"name\": \"UI\",\n            \"id\":
+      \"80e08d65-db30-412e-8b56-73f2e9aadf4c\",\n            \"actions\": [\n               
+      {\n                    \"name\": \"pause\",\n                    \"type\":
+      \"Button\",\n                    \"id\": \"41ed57bc-4b6e-4528-a951-22dae39af693\",\n                   
+      \"expectedControlType\": \"Button\",\n                    \"processors\": \"\",\n                   
+      \"interactions\": \"\",\n                    \"initialStateCheck\": false\n               
+      }\n            ],\n            \"bindings\": [\n                {\n                   
+      \"name\": \"\",\n                    \"id\": \"883dbb30-d02a-4f92-ab3f-6d075150c5ef\",\n                   
+      \"path\": \"<Gamepad>/start\",\n                    \"interactions\": \"\",\n                   
+      \"processors\": \"\",\n                    \"groups\": \"\",\n                   
+      \"action\": \"pause\",\n                    \"isComposite\": false,\n                   
+      \"isPartOfComposite\": false\n                },\n                {\n                   
+      \"name\": \"\",\n                    \"id\": \"c6502177-a53c-4140-9eb4-cffedd2459ca\",\n                   
+      \"path\": \"<Keyboard>/escape\",\n                    \"interactions\": \"\",\n                   
+      \"processors\": \"\",\n                    \"groups\": \"\",\n                   
+      \"action\": \"pause\",\n                    \"isComposite\": false,\n                   
+      \"isPartOfComposite\": false\n                }\n            ]\n        }\n   
+      ],\n    \"controlSchemes\": []\n}"
     m_IsDirty: 0
   m_Toolbar:
     m_IsDirty: 0
@@ -1224,23 +1267,23 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes/Level
+    - Assets
     m_Globs: []
     m_OriginalText: 
     m_FilterByTypeIntersection: 0
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scenes/Level
+  - Assets
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\nyukiland\Documents\GitHub\Project_Parkour\acrobat
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 82b30000
-    m_LastClickedID: 45954
-    m_ExpandedIDs: 00000000727500007677000000ca9a3b
+    m_SelectedIDs: 56780000
+    m_LastClickedID: 30806
+    m_ExpandedIDs: 000000005678000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1268,7 +1311,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000072750000
+    m_ExpandedIDs: 000000005678000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

@@ -21,6 +21,7 @@ public class Deplacement : MonoBehaviour
     //bool grounded;
 
     float supposedSpeed;
+    float modifiedMaxSpeed;
 
     bool crunch;
     float speedCrunch;
@@ -70,13 +71,16 @@ public class Deplacement : MonoBehaviour
         velocity = speedGestion() + TurnVehicle();
         velocity.y += rb.velocity.y + GravtyControl();
         Crunching();
-        SlowMotionActivation();
+        
 
         rb.velocity = velocity;
     }
 
     private void Update()
     {
+        SlowMotionActivation();
+
+
         //animation control
 
         //crunch anim
@@ -121,7 +125,6 @@ public class Deplacement : MonoBehaviour
             textBestSpeed.text = "Best speed:" + Mathf.Round(bestSpeed);
         }
         textSpeed.text = Mathf.Round(supposedSpeed) + "km/h";
-
     }
 
     Vector3 speedGestion()
@@ -141,11 +144,20 @@ public class Deplacement : MonoBehaviour
         
     }
 
+
     float MathForSpeed(float valeurToGo)
     {
-        if (valeurToGo > supposedSpeed)
+        if (valeurToGo > supposedSpeed && supposedSpeed < 50)
+        {
+            supposedSpeed += manager.acceleration *2 * Time.deltaTime;
+        }
+        else if (valeurToGo > supposedSpeed)
         {
             supposedSpeed += manager.acceleration * Time.deltaTime;
+        }
+        else if (valeurToGo < supposedSpeed && valeurToGo > manager.speedMax)
+        {
+            supposedSpeed -= (manager.deceleration + decelerationInputValue)/2 * Time.deltaTime;
         }
         else if (valeurToGo < supposedSpeed)
         {
