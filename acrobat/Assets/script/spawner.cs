@@ -6,7 +6,7 @@ public class spawner : MonoBehaviour
 {
     [SerializeField] GameObject spawnable;
     [SerializeField] GameObject moto;
-    public int quantitySpawn = 40;
+    public int quantitySpawn = 20;
     List<GameObject> listOfobstacle = new List<GameObject>();
 
     // Start is called before the first frame update
