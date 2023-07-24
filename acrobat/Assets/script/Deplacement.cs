@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class Deplacement : MonoBehaviour
 {
@@ -15,11 +18,25 @@ public class Deplacement : MonoBehaviour
     Vector3 velocity;
     Rigidbody rb;
 
-    bool grounded;
+    //bool grounded;
 
     float supposedSpeed;
 
     bool crunch;
+    float speedCrunch;
+
+    [SerializeField] GameObject gestionVisu;
+    [SerializeField] GameObject pivotRota;
+    [SerializeField] GameObject boost;
+    [SerializeField] GameObject cam;
+    [SerializeField] TextMeshProUGUI textSpeed;
+    [SerializeField] TextMeshProUGUI textBestSpeed;
+
+    Vignette vign;
+    LensDistortion lens;
+    float bestSpeed;
+
+    float crunchShapeKey = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -46,11 +63,60 @@ public class Deplacement : MonoBehaviour
     void FixedUpdate()
     {
         velocity = speedGestion() + TurnVehicle();
-        velocity.y += rb.velocity.y + GravtyControl() + Crunching();
+        velocity.y += rb.velocity.y + GravtyControl();
+        Crunching();
 
         rb.velocity = velocity;
     }
 
+    private void Update()
+    {
+        //animation control
+
+        //crunch anim
+
+        if (crunch)
+        {
+            boost.SetActive(true);
+            crunchShapeKey += 100 * Time.deltaTime;
+        }
+        else
+        {
+            boost.SetActive(false);
+            crunchShapeKey -= 100 * Time.deltaTime;
+        }
+
+        crunchShapeKey = Mathf.Clamp(crunchShapeKey, 0, 100);
+        gestionVisu.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(1, crunchShapeKey);
+
+        /*
+        //landing anim
+        float landShapeKey = 0;
+
+        if (!grounded) landShapeKey += 200 * Time.deltaTime;
+        else landShapeKey -= 200 * Time.deltaTime;
+        landShapeKey = Mathf.Clamp(landShapeKey, 0, 100);
+        gestionVisu.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, landShapeKey); */
+
+        //rota anim
+         pivotRota.transform.localEulerAngles = new Vector3(0, 0, -(direction.x * ((Mathf.Abs(supposedSpeed) / manager.speedMax) * 45)));
+
+        //anim cam
+        cam.GetComponent<Volume>().profile.TryGet<Vignette>(out vign);
+        vign.intensity.value = (Mathf.Abs(supposedSpeed) / manager.speedMax);
+
+        cam.GetComponent<Volume>().profile.TryGet<LensDistortion>(out lens);
+        lens.intensity.value = -(Mathf.Abs(supposedSpeed) / manager.speedMax)/3;
+
+        //text
+        if (supposedSpeed>bestSpeed)
+        {
+            bestSpeed = supposedSpeed;
+            textBestSpeed.text = "Best speed:" + Mathf.Round(bestSpeed);
+        }
+        textSpeed.text = Mathf.Round(supposedSpeed) + "km/h";
+
+    }
 
     Vector3 speedGestion()
     {
@@ -60,7 +126,10 @@ public class Deplacement : MonoBehaviour
         else speedToGo -= decelerationInputValue;
         speedToGo += manager.joystickImpactOnSpeed * direction.y;
 
+        if (crunch) speedToGo += speedCrunch;
+
         if (immediateBrake) speedToGo = 0;
+
 
         return transform.forward *  MathForSpeed(speedToGo);
         
@@ -74,15 +143,15 @@ public class Deplacement : MonoBehaviour
         }
         else if (valeurToGo < supposedSpeed)
         {
-            supposedSpeed -= manager.deceleration * Time.deltaTime;
+            supposedSpeed -= (manager.deceleration + decelerationInputValue) * Time.deltaTime;
         }
         else if (valeurToGo < supposedSpeed && immediateBrake)
         {
-            supposedSpeed += manager.acceleration * 3 * Time.deltaTime;
+            supposedSpeed += manager.deceleration * 3 * Time.deltaTime;
         }
         else if (valeurToGo > supposedSpeed && immediateBrake)
         {
-            supposedSpeed -= manager.acceleration * 3 * Time.deltaTime;
+            supposedSpeed -= manager.deceleration * 3 * Time.deltaTime;
         }
 
         return supposedSpeed;
@@ -90,9 +159,18 @@ public class Deplacement : MonoBehaviour
 
     Vector3 TurnVehicle()
     {
-        Quaternion rota = Quaternion.Euler(0, transform.eulerAngles.y +(direction.x * (1.75f - accelerationInputValue)), 0);
+        if (supposedSpeed < 0.5f && supposedSpeed > -0.5f)
+        {
+            rb.MoveRotation(Quaternion.Euler(transform.eulerAngles));
+            return Vector3.zero;
+        }
+
+
+        Quaternion rota = Quaternion.Euler(0, transform.eulerAngles.y +(direction.x * (1.75f - (Mathf.Abs(supposedSpeed)/manager.speedMax))), 0);
         rb.MoveRotation(rota);
-        return transform.right * (direction.x * (accelerationInputValue/2));
+        
+
+        return transform.right * (direction.x * ((Mathf.Abs(supposedSpeed) / manager.speedMax) / 2));
     }
 
     float GravtyControl()
@@ -102,31 +180,32 @@ public class Deplacement : MonoBehaviour
 
         if (Physics.Raycast(transform.position, -transform.up, out hit, lenghtOfRaycast))
         {
-            grounded = true;
+            //grounded = true;
             return 0;
         }
         else
         {
-            grounded = false;
+            //grounded = false;
             return -manager.gravityOfVehicle * Time.deltaTime;
         }
     }
 
-    float Crunching()
+    void Crunching()
     {
+
         if (crunch)
         {
             GetComponent<BoxCollider>().size = new Vector3(1, 0.5f, 1);
             GetComponent<BoxCollider>().center = new Vector3(0, -0.25f, 0);
 
-            if (!grounded) return -manager.crunchFalling;
-            else return 0;
+            speedCrunch += 5 * Time.deltaTime;
         }
         else
         {
             GetComponent<BoxCollider>().size = new Vector3(1, 1, 1);
             GetComponent<BoxCollider>().center = Vector3.zero;
-            return 0;
+
+            speedCrunch = 0;
         }
     }
 
@@ -138,4 +217,5 @@ public class Deplacement : MonoBehaviour
             velocity = Vector3.zero;
         }
     }
+
 }

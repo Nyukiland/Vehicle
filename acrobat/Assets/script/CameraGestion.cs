@@ -32,6 +32,7 @@ public class CameraGestion : MonoBehaviour
     void FixedUpdate()
     {
         CamPosition();
+        followAndRot();
     }
 
     void ChangeCam()
@@ -57,7 +58,7 @@ public class CameraGestion : MonoBehaviour
         }
         else
         {
-            followAndRot();
+            
 
             Camera.main.transform.LookAt(transform);
 
@@ -80,6 +81,7 @@ public class CameraGestion : MonoBehaviour
     void followAndRot()
     {
         motoPivot.transform.localRotation = moto.transform.localRotation;
-        motoPivot.transform.position = Vector3.SmoothDamp(motoPivot.transform.position, moto.transform.position, ref smoothVelocity, manager.followSpeedCam);
+        if (camState != 2) motoPivot.transform.position = Vector3.SmoothDamp(motoPivot.transform.position, moto.transform.position, ref smoothVelocity, manager.followSpeedCam);
+        else motoPivot.transform.position = moto.transform.position;
     }
 }
