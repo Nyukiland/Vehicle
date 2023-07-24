@@ -89,6 +89,7 @@ public class Deplacement : MonoBehaviour
         {
             boost.SetActive(true);
             crunchShapeKey += 100 * Time.deltaTime;
+
         }
         else
         {
@@ -122,9 +123,9 @@ public class Deplacement : MonoBehaviour
         if (supposedSpeed>bestSpeed)
         {
             bestSpeed = supposedSpeed;
-            textBestSpeed.text = "Best speed:" + Mathf.Round(bestSpeed);
+            textBestSpeed.text = "Best speed: " + Mathf.Round(bestSpeed);
         }
-        textSpeed.text = Mathf.Round(supposedSpeed) + "km/h";
+        textSpeed.text = Mathf.Round(supposedSpeed) + " km/h";
     }
 
     Vector3 speedGestion()
@@ -165,11 +166,11 @@ public class Deplacement : MonoBehaviour
         }
         else if (valeurToGo < supposedSpeed && immediateBrake)
         {
-            supposedSpeed += manager.deceleration * 3 * Time.deltaTime;
+            supposedSpeed += manager.deceleration * 6 * Time.deltaTime;
         }
         else if (valeurToGo > supposedSpeed && immediateBrake)
         {
-            supposedSpeed -= manager.deceleration * 3 * Time.deltaTime;
+            supposedSpeed -= manager.deceleration * 6 * Time.deltaTime;
         }
 
         return supposedSpeed;
@@ -240,6 +241,10 @@ public class Deplacement : MonoBehaviour
             ChromaticAberration chrom;
             cam.GetComponent<Volume>().profile.TryGet<ChromaticAberration>(out chrom);
             chrom.intensity.value = 1;
+
+            ColorAdjustments col;
+            cam.GetComponent<Volume>().profile.TryGet<ColorAdjustments>(out col);
+            col.active = true;
         }
         else
         {
@@ -247,6 +252,10 @@ public class Deplacement : MonoBehaviour
             ChromaticAberration chrom;
             cam.GetComponent<Volume>().profile.TryGet<ChromaticAberration>(out chrom);
             chrom.intensity.value = 0;
+
+            ColorAdjustments col;
+            cam.GetComponent<Volume>().profile.TryGet<ColorAdjustments>(out col);
+            col.active = false;
         }
     }
 

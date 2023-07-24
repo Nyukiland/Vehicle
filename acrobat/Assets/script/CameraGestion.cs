@@ -55,10 +55,11 @@ public class CameraGestion : MonoBehaviour
 
             if (lookBehind) Camera.main.transform.localRotation = new Quaternion(0, 180, 0, 0);
             else Camera.main.transform.localRotation = new Quaternion(0, 0, 0, 0);
+            moto.transform.GetChild(0).gameObject.SetActive(false);
         }
         else
         {
-            
+            moto.transform.GetChild(0).gameObject.SetActive(true);
 
             Camera.main.transform.LookAt(transform);
 
@@ -81,7 +82,8 @@ public class CameraGestion : MonoBehaviour
     void followAndRot()
     {
         motoPivot.transform.localRotation = moto.transform.localRotation;
-        if (camState != 2) motoPivot.transform.position = Vector3.SmoothDamp(motoPivot.transform.position, moto.transform.position, ref smoothVelocity, manager.followSpeedCam);
-        else motoPivot.transform.position = moto.transform.position;
+
+        if (camState == 2) motoPivot.transform.position = moto.transform.position;
+        else motoPivot.transform.position = Vector3.SmoothDamp(motoPivot.transform.position, moto.transform.position, ref smoothVelocity, manager.followSpeedCam);
     }
 }
